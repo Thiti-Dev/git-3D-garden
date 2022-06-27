@@ -16,6 +16,7 @@ import {
 } from "./constants/variables";
 import { TCreateApolloClientConnectionConfigAuthTypes } from "./core/modules-facilitate/apollo/types";
 import MainPage from "./pages/main";
+import ViewFarm from "./pages/view-farm";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -32,6 +33,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/view-farm/:username" element={<ViewFarm />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
