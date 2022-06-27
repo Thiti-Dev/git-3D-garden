@@ -1,20 +1,40 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import {
+  ApolloClient,
+  ApolloProvider,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { createApolloClientConnection } from "./core/modules-facilitate/apollo";
+import {
+  GITHUB_GRAPHQL_ENDPOINT,
+  PUBLIC_GITHUB_API_KEY,
+} from "./constants/variables";
+import { TCreateApolloClientConnectionConfigAuthTypes } from "./core/modules-facilitate/apollo/types";
+import MainPage from "./pages/main";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const apolloClient: ApolloClient<NormalizedCacheObject> =
+  createApolloClientConnection(GITHUB_GRAPHQL_ENDPOINT, {
+    authorization: TCreateApolloClientConnectionConfigAuthTypes.BEARER,
+    token: PUBLIC_GITHUB_API_KEY,
+  });
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+    <ApolloProvider client={apolloClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>
 );
 
