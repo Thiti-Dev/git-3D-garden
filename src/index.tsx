@@ -17,6 +17,8 @@ import {
 import { TCreateApolloClientConnectionConfigAuthTypes } from "./core/modules-facilitate/apollo/types";
 import MainPage from "./pages/main";
 import ViewFarm from "./pages/view-farm";
+import WebFont from "webfontloader";
+import webConfig from "./configs/web.json";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -27,6 +29,13 @@ const apolloClient: ApolloClient<NormalizedCacheObject> =
     authorization: TCreateApolloClientConnectionConfigAuthTypes.BEARER,
     token: PUBLIC_GITHUB_API_KEY,
   });
+
+WebFont.load({
+  google: {
+    families: webConfig.google_font_list_to_be_loaded,
+  },
+});
+
 root.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
