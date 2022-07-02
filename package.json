@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@heroicons/react": "^1.0.6",
     "@react-three/cannon": "^6.3.0",
     "@react-three/drei": "^9.14.3",
     "@react-three/fiber": "^8.0.27",
