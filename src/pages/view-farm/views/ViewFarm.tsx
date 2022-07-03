@@ -6,13 +6,14 @@ import {
   PerspectiveCamera,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GET_TOTAL_CONTRIBUTIONS_OF_USER } from "../../../constants/gql/GET_TOTAL_CONTRIBUTIONS";
 import { ITotalContributionsByWeekGraphqlResult } from "../../../shared/types/global.interfaces";
 import { Vector3, PerspectiveCamera as TPerspectiveCamera } from "three";
 import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
+  HomeIcon,
 } from "@heroicons/react/solid";
 import Spinner from "../../../components/common/spinner";
 import TreeBase from "./TreeBase";
@@ -30,6 +31,7 @@ const _currentYear: number = _date.getFullYear();
 
 const ViewFarm: React.FC = () => {
   const { username } = useParams();
+  const navigate = useNavigate();
   const [isFresh, setIsFresh] = useState<boolean>(true);
   const [currentYear, setCurrentYear] = useState<number>(_currentYear);
   const [currentMonth, setCurrentMonth] = useState<number>(_currentMonth);
@@ -176,9 +178,14 @@ const ViewFarm: React.FC = () => {
       <div className="h-screen w-screen absolute z-50 pointer-events-none">
         <div className="flex w-full flex-col">
           <p className="m-auto leading-tight text-2xl mt-10 mb-2 text-black-600 font-creepster">
-            Contribution farm: {currentYear}-
-            {currentMonth.toString().padStart(2, "0")}-01 to {currentToYear}-
-            {currentToMonth.toString().padStart(2, "0")}-01
+            Contribution farm of {username}:{" "}
+            <span className="text-blue-400">
+              {currentYear}-{currentMonth.toString().padStart(2, "0")}-01{" "}
+            </span>
+            to{" "}
+            <span className="text-orange-400">
+              {currentToYear}-{currentToMonth.toString().padStart(2, "0")}-01
+            </span>
           </p>
           <div style={{ position: "absolute", left: "3%", top: "45%" }}>
             <ArrowNarrowLeftIcon
@@ -190,6 +197,14 @@ const ViewFarm: React.FC = () => {
             <ArrowNarrowRightIcon
               onClick={onNavigating.bind(null, "forward")}
               className="h-20 w-20 text-blue-500 pointer-events-auto cursor-pointer hover:scale-125"
+            />
+          </div>
+          <div style={{ position: "absolute", left: "3%", top: "3%" }}>
+            <HomeIcon
+              onClick={() => {
+                navigate("/");
+              }}
+              className="h-10 w-10 text-grey-500 pointer-events-auto cursor-pointer hover:scale-125"
             />
           </div>
         </div>
