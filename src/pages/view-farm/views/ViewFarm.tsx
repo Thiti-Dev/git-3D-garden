@@ -62,6 +62,13 @@ const ViewFarm: React.FC = () => {
   }, [username]);
   // ────────────────────────────────────────────────────────────────────────────────
 
+  let currentToYear: number = currentYear;
+  let currentToMonth: number = currentMonth + 1;
+
+  if (currentMonth === 12) {
+    currentToMonth = 1;
+    currentToYear = currentYear + 1;
+  }
   const { loading, error, data } =
     useQuery<ITotalContributionsByWeekGraphqlResult>(
       GET_TOTAL_CONTRIBUTIONS_OF_USER,
@@ -71,7 +78,7 @@ const ViewFarm: React.FC = () => {
           from: `${currentYear}-${currentMonth
             .toString()
             .padStart(2, "0")}-01T00:00:00+00:00`,
-          to: `${currentYear}-${(currentMonth + 1)
+          to: `${currentToYear}-${currentToMonth
             .toString()
             .padStart(2, "0")}-01T00:00:00+00:00`,
         },
@@ -106,14 +113,6 @@ const ViewFarm: React.FC = () => {
       loading={loading}
     />
   ) : null;
-
-  let currentToYear: number = currentYear;
-  let currentToMonth: number = currentMonth + 1;
-
-  if (currentMonth === 12) {
-    currentToMonth = 1;
-    currentToYear = currentYear + 1;
-  }
   // ────────────────────────────────────────────────────────────────────────────────
 
   //
