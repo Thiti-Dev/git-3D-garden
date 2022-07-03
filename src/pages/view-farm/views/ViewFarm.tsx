@@ -188,7 +188,8 @@ const ViewFarm: React.FC = () => {
       <div className="h-screen w-screen absolute z-50 pointer-events-none">
         <div className="flex w-full flex-col">
           <p className="m-auto leading-tight text-2xl mt-10 mb-2 text-black-600 font-creepster select-none">
-            Contribution farm of {username}:{" "}
+            Contribution farm of{" "}
+            <span className="text-red-600">{username}</span>:{" "}
             <span className="text-blue-400">
               {currentYear}-{currentMonth.toString().padStart(2, "0")}-01{" "}
             </span>
