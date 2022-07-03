@@ -1,9 +1,13 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MainPage: React.FC = () => {
   const inputEl = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.document.title = "🏡 git-3D-garden";
+  }, []);
 
   function onEnterFarm() {
     const inputValue = inputEl.current?.value;
