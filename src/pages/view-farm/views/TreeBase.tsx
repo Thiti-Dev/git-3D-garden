@@ -24,6 +24,7 @@ const TreeBase: React.FC<IProps> = ({
   loading,
 }) => {
   const groupRef = useRef<Group>(null);
+  const [isStablelized, setIsStablelized] = useState<boolean>(false);
   const [selfFarmData, setSelfFarmData] = useState<
     | ITotalContributionsByWeekGraphqlResult["user"]["contributionsCollection"]["contributionCalendar"]["weeks"][0]["contributionDays"]
     | null
@@ -36,13 +37,22 @@ const TreeBase: React.FC<IProps> = ({
   useEffect(() => {
     setSelfFarmData(farmData!.slice(0, farmData!.length - 1));
     if (currentNavigationData.comeFromEdge) {
-      console.log("should came in from the edge");
+      console.log("[DEV]: TreeBase Should come in from the edge");
+    } else {
+      //Fresh mount
+      setIsStablelized(true);
     }
     return () => {
       console.log("[DEV]: TreeBase got unmounted");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!isStablelized || !farmData || loading || startNavigationProcess)
+      return;
+    setSelfFarmData(farmData!.slice(0, farmData!.length - 1));
+  }, [farmData, isStablelized, loading, startNavigationProcess]);
   // ────────────────────────────────────────────────────────────────────────────────
 
   //
@@ -74,7 +84,7 @@ const TreeBase: React.FC<IProps> = ({
         );
         if (groupRef.current?.position.x >= 80) {
           groupRef.current?.position.setX(80);
-          setStartNavigationProcess(false);
+          //setStartNavigationProcess(false);
           onNavigationDone();
         }
       } else if (currentNavigationData.direction === "forward") {
@@ -83,7 +93,7 @@ const TreeBase: React.FC<IProps> = ({
         );
         if (groupRef.current?.position.x <= -80) {
           groupRef.current?.position.setX(-80);
-          setStartNavigationProcess(false);
+          //setStartNavigationProcess(false);
           onNavigationDone();
         }
       }
@@ -98,6 +108,7 @@ const TreeBase: React.FC<IProps> = ({
         if (groupRef.current?.position.x >= 0) {
           groupRef.current?.position.setX(0);
           onTransistStableized();
+          setIsStablelized(true);
         }
       } else if (currentNavigationData.direction === "forward") {
         groupRef.current?.position.setX(
@@ -106,6 +117,7 @@ const TreeBase: React.FC<IProps> = ({
         if (groupRef.current?.position.x <= 0) {
           groupRef.current?.position.setX(0);
           onTransistStableized();
+          setIsStablelized(true);
         }
       }
     }
