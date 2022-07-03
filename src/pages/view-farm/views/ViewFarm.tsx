@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import {
   Environment,
@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/solid";
 import Spinner from "../../../components/common/spinner";
 import TreeBase from "./TreeBase";
+import { GraphQLError } from "graphql";
 
 export interface IFarmNavigationData {
   isNavigating: boolean;
@@ -119,6 +120,39 @@ const ViewFarm: React.FC = () => {
   //
   if (loading && isFresh) {
     return <Spinner withCenteredFullScreenContainer />;
+  }
+  if (error) {
+    let renderedError: ReactNode = <h1>{error.message}</h1>;
+    if (Array.isArray(error.graphQLErrors) && error.graphQLErrors.length) {
+      const errorType: string = (
+        error.graphQLErrors[0] as GraphQLError & { type: string }
+      ).type;
+      if (errorType === "NOT_FOUND") {
+        renderedError = (
+          <h1 className="text-3xl text-black-500">
+            Username of <span className="text-red-500">{username}</span> doesn't
+            exist on the GITHUB
+          </h1>
+        );
+      }
+    }
+    return (
+      <>
+        <div className="h-screen w-screen absolute z-50 font-creepster">
+          <div className="flex h-full w-full flex-col items-center justify-center">
+            {renderedError}
+            <div style={{ position: "absolute", left: "3%", top: "3%" }}>
+              <HomeIcon
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="h-10 w-10 text-grey-500 pointer-events-auto cursor-pointer hover:scale-125"
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
   }
   // ────────────────────────────────────────────────────────────────────────────────
 
