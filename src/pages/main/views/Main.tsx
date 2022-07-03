@@ -15,7 +15,17 @@ const MainPage: React.FC = () => {
   }
   return (
     <>
-      <div className="flex h-screen">
+      <div
+        style={{
+          backgroundImage: `url('https://i.pinimg.com/originals/51/3a/32/513a32a723edd6886d4e01a4789e6d4a.jpg')`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          opacity: 0.15,
+          zIndex: -1,
+        }}
+        className="h-screen w-screen absolute"
+      />
+      <div className="flex h-screen font-creepster">
         <div className="flex m-auto w-full flex-col">
           <p className="m-auto font-medium leading-tight text-xl mt-0 mb-2 text-red-600 mb-5">
             Enter the Github's username
@@ -33,7 +43,7 @@ const MainPage: React.FC = () => {
               onClick={onEnterFarm}
               className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-full"
             >
-              Enter 3D Farm
+              Enter 3D Garden
             </button>
           </div>
         </div>
