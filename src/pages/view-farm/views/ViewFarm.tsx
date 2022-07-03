@@ -23,6 +23,7 @@ export interface IFarmNavigationData {
   isNavigationJustFinished: boolean;
   direction?: "forward" | "backward" | null;
   comeFromEdge: boolean;
+  isSafeToNavigate: boolean;
 }
 
 const _date: Date = new Date();
@@ -45,6 +46,7 @@ const ViewFarm: React.FC = () => {
       direction: null,
       isNavigationJustFinished: false,
       comeFromEdge: false,
+      isSafeToNavigate: true,
     });
   //
   // ─── REFS ───────────────────────────────────────────────────────────────────────
@@ -129,15 +131,18 @@ const ViewFarm: React.FC = () => {
       direction: null,
       isNavigationJustFinished: false,
       comeFromEdge: false,
+      isSafeToNavigate: true,
     });
   }
   function onNavigating(direction: IFarmNavigationData["direction"]): void {
     if (isFresh) setIsFresh(false);
-    if (navigatingThruFarm.isNavigating) return;
+    if (navigatingThruFarm.isNavigating || !navigatingThruFarm.isSafeToNavigate)
+      return;
     setNavigatingThruFarm((prev) => ({
       ...prev,
       isNavigating: true,
       direction,
+      isSafeToNavigate: false,
     }));
 
     let targetMonth: number = currentMonth;
@@ -174,7 +179,6 @@ const ViewFarm: React.FC = () => {
   }
 
   function onTransistStablelized() {
-    console.log("stable lol");
     clearNavigationData();
   }
   // ────────────────────────────────────────────────────────────────────────────────
