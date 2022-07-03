@@ -1,6 +1,9 @@
 ## 🏡 git-3D-garden
 
-A 3D github's contribution activities visualized out as the 3d tile set
+A 3D github's contribution activities visualized out as the 3d tile set. 
+
+#### 🔖 NOTE
+This project is inspired by [@heypoom](https://github.com/heypoom). 3-4 years ago I saw he made the [git-garden](https://github.com/heypoom/git-garden) and it was very interesting and at that time I had been planning to make one too but I had never ever finished it because of my laziness (tbh never even started) until recently I just got time and this project-idea still rounding around my mind so I think I must make it done and here's how it goes
 
 ## 🚀 Getting Started
 
