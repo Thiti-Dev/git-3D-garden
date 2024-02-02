@@ -6,7 +6,7 @@
     "@apollo/client": "^3.6.9",
     "@heroicons/react": "^1.0.6",
     "@react-three/cannon": "^6.3.0",
-    "@react-three/drei": "^9.14.3",
+    "@react-three/drei": "^9.97.0",
     "@react-three/fiber": "^8.0.27",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
